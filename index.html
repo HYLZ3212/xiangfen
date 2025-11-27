@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>灵韵AI香氛 | 专属你的气息</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Noto Sans SC', sans-serif;
+        background-color: #0f172a; /* Slate 900 */
+        color: white;
+        overflow-x: hidden;
+      }
+      
+      /* Replaced serif with sans-serif for modern look */
+      .font-display {
+        font-family: 'Noto Sans SC', sans-serif;
+        font-weight: 300;
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 2px;
+      }
+
+      /* Diffuse Light Backgrounds */
+      .bg-aurora {
+        background: 
+          radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.15) 0%, transparent 50%),
+          radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+          linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+        background-attachment: fixed;
+      }
+
+      .bg-aurora-intense {
+        background: 
+          radial-gradient(circle at 50% 30%, rgba(56, 189, 248, 0.4) 0%, transparent 60%),
+          radial-gradient(circle at 85% 60%, rgba(99, 102, 241, 0.3) 0%, transparent 50%),
+          radial-gradient(circle at 15% 70%, rgba(168, 85, 247, 0.25) 0%, transparent 50%),
+          #0b1120;
+      }
+
+      /* Animations */
+      @keyframes breathe {
+        0%, 100% { opacity: 0.6; transform: scale(1); }
+        50% { opacity: 0.9; transform: scale(1.05); }
+      }
+      .animate-breathe {
+        animation: breathe 8s ease-in-out infinite;
+      }
+
+      @keyframes fade-in-up {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in-up {
+        animation: fade-in-up 1s ease-out forwards;
+      }
+
+      /* Glassmorphism */
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      
+      .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.3s ease;
+      }
+      .glass-card:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+      
+      /* Image Masking for blending */
+      .mask-gradient-b {
+        mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+      }
+      
+      /* Tab Bar Safe Area */
+      .pb-safe-area {
+        padding-bottom: calc(env(safe-area-inset-bottom) + 80px);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+  }
+}
+</script>
+</head>
+  <body class="bg-aurora min-h-screen text-slate-100 antialiased">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

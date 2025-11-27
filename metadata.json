@@ -1,0 +1,8 @@
+{
+  "name": "灵韵AI香氛 (Aura Scents)",
+  "description": "基于AI视觉分析与深度定制的智能香氛设计平台。上传照片即可生成专属氛围海报与精油方案。",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
