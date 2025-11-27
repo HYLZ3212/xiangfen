@@ -1,8 +1,14 @@
 import { GoogleGenAI, Type, Schema } from "@google/genai";
 import { AnalysisResult, CustomFormulaResult, ChatMessage } from "../types";
 
-const apiKey = process.env.API_KEY;
-const ai = new GoogleGenAI({ apiKey: apiKey });
+// Helper to get client instance safely
+// We initialize lazily to prevent the app from crashing on load if the key is missing
+const getAiClient = () => {
+  const apiKey = process.env.API_KEY;
+  // If no key is provided (empty string from build default), we can't make calls, but we return the instance to avoid crash.
+  // The actual calls will fail and be caught by try/catch blocks in the functions.
+  return new GoogleGenAI({ apiKey: apiKey || 'MISSING_API_KEY' });
+};
 
 // Schema for Image Analysis
 const analysisSchema: Schema = {
@@ -57,6 +63,7 @@ const formulaSchema: Schema = {
 
 export const getNextInterviewQuestion = async (tags: string[], history: ChatMessage[], questionCount: number): Promise<string> => {
   try {
+    const ai = getAiClient();
     const historyText = history.map(m => `${m.role}: ${m.text}`).join('\n');
     const prompt = `
       You are Aura, an empathetic aromatherapist AI.
@@ -84,6 +91,7 @@ export const getNextInterviewQuestion = async (tags: string[], history: ChatMess
 
 export const analyzeUserContext = async (base64Image: string, tags: string[], chatHistory: ChatMessage[]): Promise<AnalysisResult> => {
   try {
+    const ai = getAiClient();
     const chatSummary = chatHistory.map(m => `${m.role === 'user' ? 'User Answer' : 'Aura Question'}: ${m.text}`).join('\n');
     
     const response = await ai.models.generateContent({
@@ -122,6 +130,7 @@ export const analyzeUserContext = async (base64Image: string, tags: string[], ch
 
 export const generatePosterBackground = async (prompt: string): Promise<string> => {
   try {
+    const ai = getAiClient();
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash-image', 
       contents: {
@@ -150,6 +159,7 @@ export const generatePosterBackground = async (prompt: string): Promise<string> 
 
 export const generateCustomScent = async (request: string): Promise<CustomFormulaResult> => {
   try {
+    const ai = getAiClient();
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: `User Request: "${request}". Create a custom essential oil formula.`,
